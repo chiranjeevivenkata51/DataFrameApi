@@ -18,5 +18,9 @@ scala> val df = sqlContext.read.load("/user/hive/warehouse/os/000000_0")
   	NOTE:
 	agg:To use Alias(as) in data frame we have to use agg function.
 	sort:Sort function is used to sort the data in desc or Asc. 
-        
-        
+3)Top 10 athletes who won highest gold medalsin all the Olympic events
+   Hive:
+       select a,sum(g) as Goldmedal from os group by a order by goldmedal desc;
+   DataFrame:
+       scala>df.groupBy("a").agg(sum("g").alias("Goldmedal")).orderBy(desc("Goldmedal")).limit(10).show()
+
