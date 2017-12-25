@@ -7,5 +7,16 @@ scala> val df = sqlContext.read.load("/user/hive/warehouse/os/000000_0")
   DataFrame ApI:
        scala> df.select("a").dropDuplicates().count()
 	   Note:dropDuplicates is alias of Distinct in Sql.
+2)No of medals each country won in each Olympic in ascending order
+   Hive:
+       SELECT c,d,sum(j) as Total FROM oc GROUP BY c,d order by total DESC;
+   Dataframe:
+       scala> df.groupBy("c","d").agg(sum("j").alias("Total")).sort($"Total".desc).show()
+                                  (or)
+       scala> df.groupBy("c","d").agg(sum("j").alias("Total")).orderBy(desc("Total")).show()
 
+  	NOTE:
+	agg:To use Alias(as) in data frame we have to use agg function.
+	sort:Sort function is used to sort the data in desc or Asc. 
+        
         
