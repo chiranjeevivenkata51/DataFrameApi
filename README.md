@@ -23,4 +23,11 @@ scala> val df = sqlContext.read.load("/user/hive/warehouse/os/000000_0")
        select a,sum(g) as Goldmedal from os group by a order by goldmedal desc;
    DataFrame:
        scala>df.groupBy("a").agg(sum("g").alias("Goldmedal")).orderBy(desc("Goldmedal")).limit(10).show()
+4)No of athletes who won gold and whose age is less than 20
+    Hive:
+        select count(a) from os where b<20 and g>=1;
+   DataFrame:
+        scala> df.where(($"b"<20)&&($"g">=1)).count()
+     Note:Where is same where clause in sql and hive
+
 
