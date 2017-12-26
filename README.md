@@ -29,5 +29,9 @@ scala> val df = sqlContext.read.load("/user/hive/warehouse/os/000000_0")
    DataFrame:
         scala> df.where(($"b"<20)&&($"g">=1)).count()
      Note:Where is same where clause in sql and hive
+8)
+hive> select c,sum(j) as vi from em1 where  f="Wrestling" and d =2012 group by c order by vi desc;
 
+DataFrame:
+scala> df.filter($"d"===2012 && $"f"==="Wrestling").groupBy("c").agg(sum("j") alias ("vi")).sort($"vi".desc).show(200)
 
